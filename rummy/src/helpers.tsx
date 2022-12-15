@@ -1,5 +1,7 @@
 import { Card } from './sprites/Card';
-import { Deck, Vector } from './types';
+import { Deck } from './sprites/Deck';
+import { Hand } from './sprites/Hand';
+import { Vector } from './types';
 import {
     CARD_WIDTH,
     CARD_HEIGHT,

@@ -1,6 +1,6 @@
 // Types
 import { Card } from '../sprites/Card';
-import { Deck } from '../types';
+import { Deck } from '../sprites/Deck';
 
 export class CanvasView {
     canvas: HTMLCanvasElement;
@@ -47,7 +47,7 @@ export class CanvasView {
 
     drawCards(cards: Deck): void {
         // match card number to appropriate properties
-        console.log('Will render a card!')
-        //cards.forEach(card => this.drawSprite(card));
+        console.log(cards)
+        //cards.forEach(card => this.drawSprite(createCard(card, )));
     }
 }

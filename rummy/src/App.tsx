@@ -1,6 +1,6 @@
 import { CanvasView } from './view/CanvasView';
 import { Card } from './sprites/Card';
-import { Deck } from './types'
+import { Deck } from './sprites/Deck';
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -24,8 +24,11 @@ function gameLoop(
   view: CanvasView,
   deck: Deck
 ) {
-  console.log('draw!');
+//  console.log('draw!');
   view.clear();
+  // draw Deck
+  // draw player's hand
+
   view.drawCards(deck);
 
   // Game Over when player discards final card
@@ -39,8 +42,11 @@ function startGame(view: CanvasView) {
   score = 0;
   view.drawInfo('');
   view.drawScore(0);
-  // Create all cards
+  // Create deck
   const deck = createDeck();
+  // Create player 1's hand
+  // Create player 2's hand
+  // Create discard pile
 
   gameLoop(view, deck);
 }
@@ -49,10 +55,10 @@ function App() {
   return (
     <div id="main" className="main">
       <canvas id="playField" width="1000" height="600"></canvas>
-      <img id="background" src="./images/background.png"></img>
+      <img id="background" src={require('./images/background.jpg')} width="1000" height="600"></img>
       <div id="display">
         <div id="score"></div>
-        <button id="start">Start</button>
+        <button id="start">Play</button>
         <div id="info">Press play!</div>
       </div>
     </div>
