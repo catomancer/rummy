@@ -1,11 +1,12 @@
 import { CanvasView } from './view/CanvasView';
 import { Card } from './sprites/Card';
 import { Deck } from './sprites/Deck';
+import { Hand } from './sprites/Hand';
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 // Helpers
-import { createDeck } from './helpers';
+import { createDeck, createHands } from './helpers';
 
 let gameOver = false;
 let score = 0;
@@ -22,19 +23,22 @@ function setGameWin(view: CanvasView) {
 
 function gameLoop(
   view: CanvasView,
-  deck: Deck
+  deck: Deck,
+  hand1: Hand,
+  hand2: Hand
 ) {
 //  console.log('draw!');
   view.clear();
   // draw Deck
+  view.drawDeck(deck);
   // draw player's hand
-
-  view.drawCards(deck);
+  // determine whose turn it is
+  view.drawHand(hand1);
 
   // Game Over when player discards final card
   // fill this in
 
-  requestAnimationFrame(() => gameLoop(view, deck));
+  requestAnimationFrame(() => gameLoop(view, deck, hand1, hand2));
 }
 
 function startGame(view: CanvasView) {
@@ -44,11 +48,15 @@ function startGame(view: CanvasView) {
   view.drawScore(0);
   // Create deck
   const deck = createDeck();
-  // Create player 1's hand
-  // Create player 2's hand
+  // Create both player's hands
+  let [hand1, hand2] = createHands(deck);
+  console.log("hand 1");
+  console.log(hand1);
+  console.log("hand 2");
+  console.log(hand2);
   // Create discard pile
 
-  gameLoop(view, deck);
+  gameLoop(view, deck, hand1, hand2);
 }
 
 function App() {

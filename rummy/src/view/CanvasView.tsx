@@ -1,6 +1,9 @@
 // Types
+import { createCard } from '../helpers';
 import { Card } from '../sprites/Card';
 import { Deck } from '../sprites/Deck';
+import { Hand } from '../sprites/Hand';
+import { CARD_WIDTH, CARD_SPACING, DECK_X, DECK_Y, HAND_START_X, HAND_Y } from '../setup';
 
 export class CanvasView {
     canvas: HTMLCanvasElement;
@@ -45,9 +48,38 @@ export class CanvasView {
         );
     }
 
-    drawCards(cards: Deck): void {
-        // match card number to appropriate properties
-        console.log(cards)
-        //cards.forEach(card => this.drawSprite(createCard(card, )));
+    drawDeck(deck: Deck): void {
+        if (!deck) return;
+
+        //create top card
+        var first = deck.cards.find(Boolean);
+        if (first) {
+            var topCard = createCard(first, {x: DECK_X, y: DECK_Y});
+
+            // draw top card
+            this.drawSprite(topCard);
+        }
+        else {
+            console.log(deck);
+        }
+    }
+
+    drawHand(hand: Hand): void {
+        if (!hand) return;
+
+        console.log("draw hand");
+        console.log(hand);
+        
+        // create X position
+        var curX = HAND_START_X;
+        
+        // loop through the hand and draw each card next to each other 
+        hand.cards.forEach((card, index) => {
+            if (index > 0) {
+                curX = curX + CARD_WIDTH + CARD_SPACING;
+            }
+
+            this.drawSprite(createCard(card, {x: curX, y: HAND_Y}))
+        });
     }
 }

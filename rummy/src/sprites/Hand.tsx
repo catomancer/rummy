@@ -1,14 +1,14 @@
-import { Card } from "./Card";
-
 export class Hand {
+    cards: number[];
+
     constructor(
-        private hand: Card[]
+        cards: number[]
     ) {
-        this.hand = hand;
+        this.cards = cards;
     }
 
     // Getters
-    get cardsInHand(): Card[] {
-        return this.hand;
+    get cardsInHand(): number[] {
+        return this.cards;
     }
 }
