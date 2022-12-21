@@ -48,8 +48,9 @@ export class CanvasView {
         );
     }
 
-    drawDeck(deck: Deck): void {
+    drawDeck(deck: Deck, hand: Hand): void {
         if (!deck) return;
+        if (!hand) return;
 
         //create top card
         var first = deck.cards.find(Boolean);
@@ -58,6 +59,8 @@ export class CanvasView {
 
             // draw top card
             this.drawSprite(topCard);
+            // add event listener for click (for player to draw the card)
+            this.canvas.addEventListener(`click`, (evt) => this.takeCard(first, deck, hand))
         }
         else {
             console.log(deck);
@@ -67,8 +70,8 @@ export class CanvasView {
     drawHand(hand: Hand): void {
         if (!hand) return;
 
-        console.log("draw hand");
-        console.log(hand);
+    /*    console.log("draw hand");
+        console.log(hand); */
         
         // create X position
         var curX = HAND_START_X;
@@ -81,5 +84,19 @@ export class CanvasView {
 
             this.drawSprite(createCard(card, {x: curX, y: HAND_Y}))
         });
+    }
+
+    takeCard(card: number | undefined, deck: Deck, hand: Hand): void {
+        if (!card) return;
+        if (!deck) return;
+        if (!hand) return;
+
+        console.log("take card");
+
+        // add card to hand
+         hand.cards.push(card);
+
+        // redraw hand
+        this.drawHand(hand);
     }
 }

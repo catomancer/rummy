@@ -25,20 +25,29 @@ function gameLoop(
   view: CanvasView,
   deck: Deck,
   hand1: Hand,
-  hand2: Hand
+  hand2: Hand,
+  turn: Boolean
 ) {
 //  console.log('draw!');
   view.clear();
-  // draw Deck
-  view.drawDeck(deck);
-  // draw player's hand
   // determine whose turn it is
-  view.drawHand(hand1);
+  if (turn) {
+      // draw Deck
+    view.drawDeck(deck, hand1);
+    //draw player's hand
+    view.drawHand(hand1);
+  }
+  else {
+      // draw Deck
+    view.drawDeck(deck, hand2);
+    // draw player's hand
+    view.drawHand(hand2);
+  }
 
   // Game Over when player discards final card
   // fill this in
 
-  requestAnimationFrame(() => gameLoop(view, deck, hand1, hand2));
+  requestAnimationFrame(() => gameLoop(view, deck, hand1, hand2, !turn));
 }
 
 function startGame(view: CanvasView) {
@@ -46,17 +55,20 @@ function startGame(view: CanvasView) {
   score = 0;
   view.drawInfo('');
   view.drawScore(0);
+  // Set turn
+  var turn = true;
   // Create deck
   const deck = createDeck();
+
   // Create both player's hands
   let [hand1, hand2] = createHands(deck);
-  console.log("hand 1");
+/*  console.log("hand 1");
   console.log(hand1);
   console.log("hand 2");
-  console.log(hand2);
+  console.log(hand2); */
   // Create discard pile
 
-  gameLoop(view, deck, hand1, hand2);
+  gameLoop(view, deck, hand1, hand2, turn);
 }
 
 function App() {
