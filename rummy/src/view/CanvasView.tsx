@@ -106,10 +106,10 @@ export class CanvasView {
             // add deck card to hand
             // fix this
             if (hand.name === 'Hand 1') {
-                deck.cardsInDeck.push(deck.cardsInDeck.slice(0));
+                deck.cardsInDeck.push(deck.cardsInDeck.pop());
             }
             else {
-                deck.cardsInDeck.push(deck.cardsInDeck.slice(0));
+                deck.cardsInDeck.push(deck.cardsInDeck.pop());
             }
             
             // redraw deck
