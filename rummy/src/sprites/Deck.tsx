@@ -27,5 +27,4 @@ export class Deck {
     set cardsInDeck(cards: number[]) {
       this.cards = cards;
     }
-
   };

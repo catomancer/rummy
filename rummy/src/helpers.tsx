@@ -45,5 +45,5 @@ export function createHands(deck: Deck): [Hand, Hand] {
         return index % 2 !== 0;
     })
 
-    return [new Hand(hand1), new Hand(hand2)];
+    return [new Hand(hand1, 'Hand 1'), new Hand(hand2, 'Hand 2')];
 }

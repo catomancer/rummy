@@ -3,21 +3,33 @@ import { createCard } from '../helpers';
 import { Card } from '../sprites/Card';
 import { Deck } from '../sprites/Deck';
 import { Hand } from '../sprites/Hand';
-import { CARD_WIDTH, CARD_SPACING, DECK_X, DECK_Y, HAND_START_X, HAND_Y } from '../setup';
+import { CARD_WIDTH, CARD_HEIGHT, CARD_SPACING, DECK_X, DECK_Y, HAND_START_X, HAND_Y } from '../setup';
 
 export class CanvasView {
     canvas: HTMLCanvasElement;
+    deck: Deck | null;
+    hand1: Hand | null;
+    hand2: Hand | null;
+    turn: Hand | null;
     private context: CanvasRenderingContext2D | null;
     private scoreDisplay: HTMLObjectElement | null;
     private start: HTMLObjectElement | null;
     private info: HTMLObjectElement | null;
 
-    constructor(canvasName: string) {
+    constructor(
+        canvasName: string
+        ) {
         this.canvas = document.querySelector(canvasName) as HTMLCanvasElement;
+        this.deck = null;
+        this.hand1 = null;
+        this.hand2 = null;
+        this.turn = null;
         this.context = this.canvas.getContext('2d');
         this.scoreDisplay = document.querySelector('#score');
         this.start = document.querySelector('#start');
         this.info = document.querySelector('#info');
+        // make clickable
+        this.canvas.addEventListener(`click`, (evt) => this.handleClick(evt.x, evt.y, this.deck, this.turn));
     }
 
     clear(): void {
@@ -48,9 +60,8 @@ export class CanvasView {
         );
     }
 
-    drawDeck(deck: Deck, hand: Hand): void {
+    drawDeck(deck: Deck | null): void {
         if (!deck) return;
-        if (!hand) return;
 
         //create top card
         var first = deck.cards.find(Boolean);
@@ -59,15 +70,13 @@ export class CanvasView {
 
             // draw top card
             this.drawSprite(topCard);
-            // add event listener for click (for player to draw the card)
-            this.canvas.addEventListener(`click`, (evt) => this.takeCard(first, deck, hand))
         }
         else {
             console.log(deck);
         }
     }
 
-    drawHand(hand: Hand): void {
+    drawHand(hand: Hand | null): void {
         if (!hand) return;
 
     /*    console.log("draw hand");
@@ -86,10 +95,33 @@ export class CanvasView {
         });
     }
 
-    takeCard(card: number | undefined, deck: Deck, hand: Hand): void {
-        if (!card) return;
-        if (!deck) return;
-        if (!hand) return;
+    private handleClick(x: number, y: number, deck: Deck | null, hand: Hand | null): void {
+        if (!x || !y || !deck || !hand) return;
+
+        console.log("handle click");
+
+        // determine if click in deck, discard pile, or hand
+        if (x >= DECK_X && x <= DECK_X + CARD_WIDTH && y >= DECK_Y && x <= DECK_Y + CARD_HEIGHT) {
+            // deck is clicked
+            // add deck card to hand
+            // fix this
+            if (hand.name === 'Hand 1') {
+                deck.cardsInDeck.push(deck.cardsInDeck.slice(0));
+            }
+            else {
+                deck.cardsInDeck.push(deck.cardsInDeck.slice(0));
+            }
+            
+            // redraw deck
+            this.drawDeck(deck);
+
+            // redraw hand
+            this.drawHand(hand);
+        }
+    }
+
+    takeCard(card: number | null, deck: Deck, hand: Hand): void {
+        if (!card || !deck || !hand) return;
 
         console.log("take card");
 
@@ -98,5 +130,39 @@ export class CanvasView {
 
         // redraw hand
         this.drawHand(hand);
+    }
+
+    // Getters
+    get deckCards() {
+        return this.deck;
+    }
+
+    get hand1Cards() {
+        return this.hand1;
+    }
+
+    get hand2Cards() {
+        return this.hand2;
+    }
+
+    get playerTurn() {
+        return this.turn;
+    }
+
+    // Setters
+    set deckCards(deck: Deck | null) {
+        this.deck = deck;
+    }
+
+    set hand1Cards(hand1: Hand | null) {
+        this.hand1 = hand1;
+    }
+
+    set hand2Cards(hand2: Hand | null) {
+        this.hand2 = hand2;
+    }
+
+    set playerTurn(turn: Hand | null) {
+        this.turn = turn;
     }
 }

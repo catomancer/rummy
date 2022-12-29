@@ -31,4 +31,9 @@ export class Card {
     get image(): HTMLImageElement {
         return this.cardImage;
     }
+
+    // Setters
+    set pos(position: Vector) {
+        this.position = position;
+    }
 }
