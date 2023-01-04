@@ -53,13 +53,14 @@ import QUEEN_OF_SPADES_IMAGE from './images/queen_of_spades.png';
 import KING_OF_SPADES_IMAGE from './images/king_of_spades.png';
 
 // Constants
-export const CARD_WIDTH = 144;
-export const CARD_HEIGHT = 227;
-export const CARD_SPACING = 2;
+export const CARD_WIDTH = 230;
+export const CARD_HEIGHT = 300;
 export const HAND_START_X = 200;
 export const HAND_Y = 300;
 export const DECK_X = 50;
 export const DECK_Y = 50;
+export const TABLE_WIDTH = 1000;
+export const TABLE_HEIGHT = 500;
 
 export const CARD_IMAGES: { [key: number]: string } = {
     1: ACE_OF_HEARTS_IMAGE,
